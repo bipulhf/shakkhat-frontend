@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { showEnhancedToast } from "@/components/enhanced-toast";
+import { sendNotificationId } from "@/actions/notification.action";
 
 // Firebase configuration (replace with your own)
 const firebaseConfig = {
@@ -51,17 +52,12 @@ export function useFirebaseNotifications() {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
           });
 
+          console.log("Notification token:", currentToken);
+
           if (currentToken) {
             setToken(currentToken);
             // Send token to your backend to save for future notifications
-            const response = await fetch("/api/fcmToken", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ token: currentToken }),
-            });
-            console.log("Token sent to server:", response.ok);
+            await sendNotificationId(currentToken);
           } else {
             console.log(
               "No registration token available. Request permission to generate one."
