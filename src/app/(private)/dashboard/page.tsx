@@ -1,8 +1,9 @@
-import { ScheduleView } from "@/components/dashboard/schedule-view";
+// import { ScheduleView } from "@/components/dashboard/schedule-view";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { RequestSchedule } from "@/components/dashboard/request-schedule";
 import SearchMeeting from "@/components/dashboard/search-meeting";
+import Calendar from "@/components/dashboard/calendar";
 
 export default function DashboardPage() {
   return (
@@ -18,7 +19,8 @@ export default function DashboardPage() {
         </div>
       </div>
       <div className=''>
-        <ScheduleView />
+        {/* <ScheduleView /> */}
+        <Calendar />
       </div>
     </div>
   );
