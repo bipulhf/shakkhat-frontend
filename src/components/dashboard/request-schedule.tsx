@@ -33,6 +33,7 @@ export function RequestSchedule({
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
+  const [maxDate, setMaxDate] = useState("2030-12-31");
   const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
   const [isValid, setIsValid] = useState(false);
   const [slotNo, setSlotNo] = useState(0);
@@ -132,7 +133,17 @@ export function RequestSchedule({
               <Label htmlFor='slot-no'>Slot No</Label>
               <Select
                 value={slotNo as unknown as string}
-                onValueChange={(value) => setSlotNo(parseInt(value))}
+                onValueChange={(value) => {
+                  setSlotNo(parseInt(value));
+                  setMaxDate(
+                    format(
+                      selectedUser?.slots.find(
+                        (slot) => slot.id === parseInt(value)
+                      )?.endDate || new Date(),
+                      "yyyy-MM-dd"
+                    )
+                  );
+                }}
               >
                 <SelectTrigger className='w-[280px]'>
                   <SelectValue placeholder='Select Slot ...' />
@@ -166,6 +177,7 @@ export function RequestSchedule({
               name='date'
               required
               min={format(new Date(), "yyyy-MM-dd")}
+              max={maxDate}
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />

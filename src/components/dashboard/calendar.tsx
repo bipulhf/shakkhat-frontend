@@ -7,7 +7,6 @@ import {
   startOfWeek,
   eachDayOfInterval,
   setHours,
-  setMinutes,
 } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,37 +17,7 @@ import {
   isTaskInDay,
 } from "@/lib/calendarUtils";
 import TaskAssignModal from "./task-assign-modal";
-
-const initialTasks: Task[] = [
-  {
-    id: "1",
-    title: "Team Meeting",
-    start: setMinutes(setHours(new Date(), 10), 0),
-    end: setMinutes(setHours(new Date(), 11), 0),
-    free: false,
-  },
-  {
-    id: "2",
-    title: "Project Deadline",
-    start: setMinutes(setHours(addDays(new Date(), 1), 15), 0),
-    end: setMinutes(setHours(addDays(new Date(), 1), 16), 0),
-    free: false,
-  },
-  {
-    id: "3",
-    title: "Lunch with Client",
-    start: setMinutes(setHours(addDays(new Date(), 2), 12), 30),
-    end: setMinutes(setHours(addDays(new Date(), 2), 13), 30),
-    free: false,
-  },
-  {
-    id: "4",
-    title: "Slot 1",
-    start: setMinutes(setHours(addDays(new Date(), 3), 12), 30),
-    end: setMinutes(setHours(addDays(new Date(), 3), 13), 30),
-    free: true,
-  },
-];
+import { transformDate } from "@/lib/date";
 
 const colors = [
   "bg-red-500",
@@ -70,7 +39,37 @@ const colors = [
   "bg-rose-500",
 ];
 
-const Calendar = () => {
+const transformSlotMeeting = (slotMeeting: SlotMeeting[]) => {
+  const tasks: Task[] = [];
+  slotMeeting.forEach((slot) => {
+    let added = false;
+    slot.meetings.forEach((meeting) => {
+      if (meeting.status === 2) {
+        tasks.push({
+          id: meeting.id,
+          title: meeting.description,
+          start: transformDate(slot.startDate, meeting.start_time),
+          end: transformDate(slot.endDate, meeting.end_time),
+          free: false,
+        });
+        added = true;
+      }
+    });
+    if (!added) {
+      tasks.push({
+        id: slot.id,
+        title: `Slot ${tasks.length + 1}`,
+        start: transformDate(slot.startDate, slot.startTime),
+        end: transformDate(slot.endDate, slot.endTime),
+        free: true,
+      });
+    }
+  });
+  return tasks;
+};
+
+const Calendar = ({ slotMeeting }: { slotMeeting: SlotMeeting[] }) => {
+  const initialTasks = transformSlotMeeting(slotMeeting);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<"day" | "week">("week");
   const [openModal, setOpenModal] = useState(false);
@@ -103,10 +102,8 @@ const Calendar = () => {
       return (
         <div
           key={task.id}
-          className={`absolute left-1 right-1 ${
-            task.free
-              ? "bg-gray-500 cursor-pointer"
-              : colors[parseInt(task.id) % colors.length]
+          className={`absolute left-1 right-1 cursor-pointer ${
+            task.free ? "bg-gray-500" : colors[task.id % colors.length]
           } text-white text-xs p-1 overflow-hidden rounded-sm`}
           style={{
             top: `${top}%`,
@@ -114,10 +111,8 @@ const Calendar = () => {
             minHeight: "20px",
           }}
           onClick={() => {
-            if (task.free) {
-              setOpenModal(true);
-              setTaskId(task.id);
-            }
+            setOpenModal(true);
+            setTaskId(task.id);
           }}
         >
           <div className='font-semibold'>{task.title}</div>

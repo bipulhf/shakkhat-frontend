@@ -144,3 +144,26 @@ export async function deleteSlot(id: number) {
     return { error: e.message };
   }
 }
+
+export const getSevenDaysSlots = async () => {
+  try {
+    const c = await cookies();
+    const d = new Date();
+    const date = `${d.getFullYear()}-${d.getMonth() + 1}-${
+      d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()
+    }`;
+    const response = await fetch(
+      `${API_URL}/slot/date/${date}/user/${c.get("userId")!.value}`
+    );
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message);
+    }
+    const data = await response.json();
+    return data.groupedSlots;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { error: e.message };
+  }
+};

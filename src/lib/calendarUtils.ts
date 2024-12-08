@@ -1,7 +1,7 @@
 import { isWithinInterval, startOfDay, endOfDay } from "date-fns";
 
 export interface Task {
-  id: string;
+  id: number;
   title: string;
   start: Date;
   end: Date;

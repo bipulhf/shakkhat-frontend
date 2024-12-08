@@ -3,9 +3,14 @@ import { Plus } from "lucide-react";
 import { RequestSchedule } from "@/components/dashboard/request-schedule";
 import Calendar from "@/components/dashboard/calendar";
 import { getAllUsers } from "@/actions/users.action";
+import { getSevenDaysSlots } from "@/actions/slot.action";
 
 export default async function DashboardPage() {
   const users = await getAllUsers();
+  const sevenDaysSlot = await getSevenDaysSlots();
+  const slotMeeting: SlotMeeting[] = Object.values(
+    sevenDaysSlot
+  ).flat() as SlotMeeting[];
 
   return (
     <div className='flex flex-col gap-5 w-[1600px]'>
@@ -24,7 +29,7 @@ export default async function DashboardPage() {
       </div>
       <div className=''>
         {/* <ScheduleView /> */}
-        <Calendar />
+        <Calendar slotMeeting={slotMeeting} />
       </div>
     </div>
   );

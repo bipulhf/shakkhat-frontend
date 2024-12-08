@@ -24,6 +24,7 @@ type Meeting = {
     meetingId: number;
   }[];
 };
+
 type Slot = {
   id: number;
   title: string;
@@ -36,6 +37,20 @@ type Slot = {
   user: User;
   userId: number;
 };
+
+type SlotMeeting = {
+  id: number;
+  title: string;
+  description: string;
+  startTime: string;
+  endTime: string;
+  startDate: string;
+  endDate: string;
+  active: boolean;
+  userId: number;
+  meetings: Meeting[];
+};
+
 type NotificationType = {
   id: number;
   title: string;
