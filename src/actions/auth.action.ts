@@ -27,14 +27,18 @@ export const login = async (email: string, password: string) => {
 
     const data = await response.json();
 
-    console.log(data);
     c.set("token", data.token, {
       maxAge: 24 * 60 * 60,
     });
 
-    c.set("userId", data.user.userId, {
+    c.set("userId", data.user.id, {
       maxAge: 24 * 60 * 60,
     });
+
+    c.set("userType", data.user.role, {
+      maxAge: 24 * 60 * 60,
+    });
+
     return data;
   } catch (e: any) {
     return { error: e.message };
@@ -86,4 +90,10 @@ export const logout = async () => {
   const c = await cookies();
   c.delete("token");
   c.delete("userId");
+  c.delete("userType");
+};
+
+export const getUserType = async () => {
+  const c = await cookies();
+  return c.get("userType")?.value;
 };
