@@ -9,7 +9,7 @@ export default async function DashboardPage() {
 
   return (
     <div className='flex flex-col gap-5 w-[1600px]'>
-      <div className='flex justify-between'>
+      <div className='flex justify-end'>
         <RequestSchedule users={users}>
           <Button size='sm' className='font-bold'>
             <Plus className='h-4 w-4' /> Request Schedule
