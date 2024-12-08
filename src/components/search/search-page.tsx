@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { SearchBar } from "@/components/search/search-bar";
-import { SearchScheduleView } from "@/components/search/search-schedule-view";
+// import { SearchScheduleView } from "@/components/search/search-schedule-view";
+import UserSearchComponent from "./search-bar";
 
 export default function SearchPage({ users }: { users: User[] }) {
   // Container variant for staggered animation
@@ -38,11 +38,11 @@ export default function SearchPage({ users }: { users: User[] }) {
     <motion.div initial='hidden' animate='visible' variants={containerVariants}>
       <motion.div variants={itemVariants}>
         <div className='mb-5'>
-          <SearchBar />
+          <UserSearchComponent data={users} />
         </div>
       </motion.div>
       <motion.div variants={itemVariants}>
-        <SearchScheduleView users={users} />
+        {/* <SearchScheduleView users={filteredUsers} /> */}
       </motion.div>
     </motion.div>
   );

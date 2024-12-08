@@ -27,21 +27,23 @@ export function RequestScheduleDialog({
   open,
   setOpen,
   hostId,
+  slotId,
 }: {
   users: User[];
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   hostId: number;
+  slotId: number;
 }) {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(
     users.find((user) => user.id === hostId) || null
   );
   const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(selectedUser?.email || "");
   const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
   const [isValid, setIsValid] = useState(false);
-  const [slotNo, setSlotNo] = useState(0);
+  const [slotNo, setSlotNo] = useState(slotId);
   const [date, setDate] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -93,7 +95,7 @@ export function RequestScheduleDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Request for a meeting</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='space-y-2'>
@@ -142,7 +144,7 @@ export function RequestScheduleDialog({
                 value={slotNo as unknown as string}
                 onValueChange={(value) => setSlotNo(parseInt(value))}
               >
-                <SelectTrigger className='w-[280px]'>
+                <SelectTrigger className='w-[460px]'>
                   <SelectValue placeholder='Select Slot ...' />
                 </SelectTrigger>
                 <SelectContent>

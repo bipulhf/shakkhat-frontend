@@ -53,7 +53,7 @@ export default async function AnalyticsPage() {
         totalMeetingsHosted={hostedMeetings.length}
         meetingStatusDistribution={meetings_type}
         meetingTrends={meetingTrends}
-        notifications={notifications}
+        notifications={notifications.splice(0, 3)}
       />
     </div>
   );
