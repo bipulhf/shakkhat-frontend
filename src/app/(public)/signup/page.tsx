@@ -15,6 +15,9 @@ import {
 import Link from "next/link";
 import { TimezonesSelect } from "@/components/timezone";
 import { motion } from "motion/react";
+import { register } from "@/actions/auth.action";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -22,15 +25,30 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [profession, setProfession] = useState("");
   const [timezone, setTimezone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign-up logic here
-    console.log("Sign-up attempted with:", {
+    setLoading(true);
+    toast.loading("Signing up...");
+    // Handle login logic here
+    const data = await register({
       name,
+      timezone,
       email,
       password,
+      profession,
     });
+    if (data.error) {
+      toast.dismiss();
+      toast.error(data.error);
+    } else {
+      toast.dismiss();
+      toast.success("Signed up successfully. Now login to continue");
+      router.push("/login");
+    }
+    setLoading(false);
   };
 
   return (
@@ -51,7 +69,7 @@ export default function SignUpPage() {
             <form onSubmit={handleSubmit}>
               <div className='space-y-4'>
                 <div className='space-y-2'>
-                  <Label htmlFor='name'>Last Name</Label>
+                  <Label htmlFor='name'>Name</Label>
                   <Input
                     id='name'
                     value={name}
@@ -100,7 +118,7 @@ export default function SignUpPage() {
                 </div>
               </div>
               <Button type='submit' className='w-full mt-6'>
-                Sign Up
+                {loading ? "Signing up..." : "Sign Up"}
               </Button>
             </form>
           </CardContent>

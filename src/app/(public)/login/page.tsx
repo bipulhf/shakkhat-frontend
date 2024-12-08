@@ -14,15 +14,31 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { login } from "@/actions/auth.action";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    toast.loading("Logging in...");
     // Handle login logic here
-    console.log("Login attempted with:", { email, password });
+    const data = await login(email, password);
+    if (data.error) {
+      toast.dismiss();
+      toast.error(data.error);
+    } else {
+      toast.dismiss();
+      toast.success("Logged in successfully");
+      router.push("/dashboard");
+    }
+    setLoading(false);
   };
 
   return (
@@ -75,7 +91,7 @@ export default function LoginPage() {
                 </div>
               </div>
               <Button type='submit' className='w-full mt-6 '>
-                Sign In
+                {loading ? "Logging in..." : "Login"}
               </Button>
             </form>
           </CardContent>

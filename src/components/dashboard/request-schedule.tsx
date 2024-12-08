@@ -30,6 +30,7 @@ export function RequestSchedule({ children }: { children: React.ReactNode }) {
             <Label htmlFor='description'>Description</Label>
             <Textarea
               id='description'
+              name='description'
               placeholder='Enter description'
               required
               autoFocus
@@ -39,6 +40,7 @@ export function RequestSchedule({ children }: { children: React.ReactNode }) {
             <Label htmlFor='email'>Host Email</Label>
             <Input
               id='email'
+              name='email'
               placeholder='Enter host email'
               type='email'
               required
@@ -46,30 +48,21 @@ export function RequestSchedule({ children }: { children: React.ReactNode }) {
           </div>
           <div className='grid grid-cols-2 gap-4'>
             <div className='space-y-2'>
-              <Label htmlFor='start-time'>Start Time</Label>
+              <Label htmlFor='slot-no'>Slot No</Label>
               <Input
-                id='start-time'
-                type='time'
+                id='slot-no'
+                name='slot_no'
+                type='number'
                 required
                 min={format(new Date(), "yyyy-MM-dd")}
               />
             </div>
-            <div className='space-y-2'>
-              <Label htmlFor='end-time'>End Time</Label>
-              <Input
-                id='end-time'
-                type='time'
-                required
-                min={format(new Date(), "yyyy-MM-dd")}
-              />
-            </div>
-          </div>
-          <div className='grid grid-cols-2 gap-4'>
             <div className='space-y-2'>
               <Label htmlFor='date'>Date</Label>
               <Input
                 id='date'
                 type='date'
+                name='date'
                 required
                 min={format(new Date(), "yyyy-MM-dd")}
               />
