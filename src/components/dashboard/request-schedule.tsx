@@ -59,6 +59,12 @@ export function RequestSchedule({
       duration: 2000,
     });
     setOpen(false);
+    setDescription("");
+    setEmail("");
+    setInvitedUsers([]);
+    setSelectedUser(null);
+    setSlotNo(0);
+    setDate("");
   };
 
   useEffect(() => {
@@ -75,7 +81,7 @@ export function RequestSchedule({
     } else {
       setIsValid(false);
     }
-  }, [description]);
+  }, [description, selectedUser, slotNo, date]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

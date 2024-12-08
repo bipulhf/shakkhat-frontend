@@ -1,6 +1,7 @@
 "use server";
 
 import { API_URL } from "@/lib/api";
+import { cookies } from "next/headers";
 
 export async function createMeeting({
   date,
@@ -16,6 +17,9 @@ export async function createMeeting({
   guestIds: number[];
 }) {
   try {
+    const c = await cookies();
+    const id = c.get("userId")?.value;
+    guestIds.push(Number(id));
     const response = await fetch(`${API_URL}/meet/create`, {
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +35,8 @@ export async function createMeeting({
     });
 
     if (!response.ok) {
-      console.log(await response.json());
-      throw new Error("Failed to login");
+      const data = await response.json();
+      throw new Error(data.message);
     }
     const data = await response.json();
     return data;

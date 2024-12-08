@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import toast from "react-hot-toast";
+import { deleteSlot } from "@/actions/slot.action";
 
 interface SlotData {
   startTime: string;
@@ -23,12 +25,14 @@ interface SlotData {
 
 export function Slot({
   id,
+  index,
   startTime,
   endTime,
   startDate,
   endDate,
 }: {
-  id: string;
+  id: number;
+  index: number;
   startTime: string;
   endTime: string;
   startDate: string;
@@ -48,15 +52,26 @@ export function Slot({
     setIsUpdateDialogOpen(false);
   };
 
-  const handleDelete = () => {
-    // onDelete(id);
+  const handleDelete = async () => {
+    toast.dismiss();
+    toast.loading("Deleting slot ...");
+    const resp = await deleteSlot(id);
+    if (resp.error) {
+      toast.dismiss();
+      toast.error("Failed to delete slot");
+      return;
+    }
+    toast.dismiss();
+    toast.success("Slot deleted successful.", {
+      duration: 2000,
+    });
     setIsDeleteDialogOpen(false);
   };
 
   return (
     <div className='flex items-center justify-between p-4 border rounded-lg shadow-sm my-3'>
       <div>
-        <h3 className='text-lg font-semibold'>Slot {id}</h3>
+        <h3 className='text-lg font-semibold'>Slot {index + 1}</h3>
         <p className='font-medium'>
           From :{" "}
           {format(new Date(`${startDate}T${startTime}`), "MMM d, yyyy h:mm a")}{" "}
