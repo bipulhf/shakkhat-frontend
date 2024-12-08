@@ -106,7 +106,7 @@ const Calendar = () => {
           className={`absolute left-1 right-1 ${
             task.free
               ? "bg-gray-500 cursor-pointer"
-              : colors[Math.floor(Math.random() * colors.length)]
+              : colors[parseInt(task.id) % colors.length]
           } text-white text-xs p-1 overflow-hidden rounded-sm`}
           style={{
             top: `${top}%`,
