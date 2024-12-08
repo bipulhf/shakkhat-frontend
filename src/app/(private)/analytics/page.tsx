@@ -11,7 +11,7 @@ export default async function AnalyticsPage() {
   const hostedMeetings = completedMeetings.filter(
     (meeting) => meeting.hostId === parseInt(userId!)
   );
-  let meetings_type = [
+  const meetings_type = [
     {
       status: "Completed",
       count: 0,
