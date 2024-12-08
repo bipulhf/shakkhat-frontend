@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
 import { deleteSlot } from "@/actions/slot.action";
+import { useRouter } from "next/navigation";
 
 interface SlotData {
   startTime: string;
@@ -46,6 +47,7 @@ export function Slot({
     startDate,
     endDate,
   });
+  const router = useRouter();
 
   const handleUpdate = () => {
     // onUpdate(id, updatedSlot);
@@ -66,6 +68,7 @@ export function Slot({
       duration: 2000,
     });
     setIsDeleteDialogOpen(false);
+    router.refresh();
   };
 
   return (

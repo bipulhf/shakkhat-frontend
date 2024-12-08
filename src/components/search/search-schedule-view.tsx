@@ -2,8 +2,9 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "../ui/button";
-import { RequestSchedule } from "../dashboard/request-schedule";
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import { RequestScheduleDialog } from "./request-appointment";
 
 // Mock data for meetings
 const meetings = [
@@ -14,6 +15,7 @@ const meetings = [
     time: "09:00 AM",
     date: "2023-05-15",
     description: "Project kickoff meeting",
+    hostId: 1,
   },
   {
     id: 2,
@@ -22,6 +24,7 @@ const meetings = [
     time: "02:00 PM",
     date: "2023-05-15",
     description: "Design review session",
+    hostId: 2,
   },
   {
     id: 3,
@@ -30,10 +33,14 @@ const meetings = [
     time: "11:00 AM",
     date: "2023-05-16",
     description: "Sprint planning",
+    hostId: 3,
   },
 ];
 
-export function SearchScheduleView() {
+export function SearchScheduleView({ users }: { users: User[] }) {
+  const [open, setOpen] = useState(false);
+  const [hostId, setHostId] = useState(0);
+
   return (
     <Card className='pt-2'>
       <CardContent>
@@ -58,11 +65,17 @@ export function SearchScheduleView() {
                   </div>
                 </div>
                 <div>
-                  <RequestSchedule>
-                    <Button variant={"outline"} size='sm' className='font-bold'>
-                      <Plus className='h-4 w-4' /> Request Schedule
-                    </Button>
-                  </RequestSchedule>
+                  <Button
+                    variant={"outline"}
+                    size='sm'
+                    className='font-bold'
+                    onClick={() => {
+                      setOpen(!open);
+                      setHostId(meeting.hostId);
+                    }}
+                  >
+                    <Plus className='h-4 w-4' /> Request Schedule
+                  </Button>
                 </div>
               </li>
             ))}
@@ -72,6 +85,12 @@ export function SearchScheduleView() {
           <p className='text-center text-gray-500'>No meetings found.</p>
         )}
       </CardContent>
+      <RequestScheduleDialog
+        open={open}
+        setOpen={setOpen}
+        users={users}
+        hostId={hostId}
+      />
     </Card>
   );
 }
