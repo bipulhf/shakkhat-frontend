@@ -18,6 +18,7 @@ import { login } from "@/actions/auth.action";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import logo from "@/../public/images/logo.png";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -53,7 +54,7 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle className='text-2xl font-bold text-center'>
               <Image
-                src={"/images/logo.png"}
+                src={logo}
                 width={150}
                 height={150}
                 alt='logo'
@@ -103,11 +104,13 @@ export default function LoginPage() {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className='flex justify-center text-sm'>
-            Dont&apos;t have an account?{" "}
-            <Link href='/signup' className='font-semibold'>
-              Sign Up.
-            </Link>
+          <CardFooter className='flex justify-center'>
+            <p className='text-sm text-muted-foreground'>
+              Don&apos;t have an account?{" "}
+              <Link href='/signup' className='text-primary hover:underline'>
+                Sign Up
+              </Link>
+            </p>
           </CardFooter>
         </Card>
       </motion.div>

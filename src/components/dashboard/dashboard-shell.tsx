@@ -25,6 +25,7 @@ import { Button } from "../ui/button";
 import { logout } from "@/actions/auth.action";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import logo from "@/../public/images/logo.png";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -33,7 +34,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <Sidebar className='basis-[30%]'>
         <SidebarHeader>
           <Image
-            src={"/images/logo.png"}
+            src={logo}
             alt='logo'
             width={150}
             height={150}

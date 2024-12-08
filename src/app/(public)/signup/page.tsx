@@ -19,6 +19,7 @@ import { register } from "@/actions/auth.action";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import logo from "@/../public/images/logo.png";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -63,7 +64,7 @@ export default function SignUpPage() {
           <CardHeader>
             <CardTitle className='text-2xl font-bold'>
               <Image
-                src={"/images/logo.png"}
+                src={logo}
                 width={150}
                 height={150}
                 alt='logo'
