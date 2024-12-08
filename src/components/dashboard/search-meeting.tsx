@@ -1,14 +1,20 @@
 import { Input } from "../ui/input";
+import { cn } from "@/lib/utils";
 
 const SearchMeeting = () => {
   return (
-    <div>
+    <form
+      className={cn("flex items-center space-x-2 transition-all duration-300")}
+    >
       <Input
-        type='text'
-        placeholder='Search meeting'
-        style={{ padding: "10px", width: "100%", boxSizing: "border-box" }}
+        type='search'
+        name='search'
+        placeholder='Search...'
+        className={cn(
+          "w-full pr-4 py-2 rounded-full transition-all duration-300"
+        )}
       />
-    </div>
+    </form>
   );
 };
 

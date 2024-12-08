@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { format } from "date-fns";
 
 export function AddSchedule({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -46,17 +47,32 @@ export function AddSchedule({ children }: { children: React.ReactNode }) {
           <div className='grid grid-cols-2 gap-4'>
             <div className='space-y-2'>
               <Label htmlFor='start-time'>Start Time</Label>
-              <Input id='start-time' type='time' required />
+              <Input
+                id='start-time'
+                type='time'
+                required
+                min={format(new Date(), "yyyy-MM-dd")}
+              />
             </div>
             <div className='space-y-2'>
               <Label htmlFor='end-time'>End Time</Label>
-              <Input id='end-time' type='time' required />
+              <Input
+                id='end-time'
+                type='time'
+                required
+                min={format(new Date(), "yyyy-MM-dd")}
+              />
             </div>
           </div>
           <div className='grid grid-cols-2 gap-4'>
             <div className='space-y-2'>
               <Label htmlFor='date'>Date</Label>
-              <Input id='date' type='date' required />
+              <Input
+                id='date'
+                type='date'
+                required
+                min={format(new Date(), "yyyy-MM-dd")}
+              />
             </div>
           </div>
           <Button type='submit' className='w-full'>
