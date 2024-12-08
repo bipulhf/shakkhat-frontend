@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 interface MeetingStatusChartProps {
@@ -38,7 +34,6 @@ export function MeetingStatusChart({ data }: MeetingStatusChartProps) {
             outerRadius={80}
             fill='#8884d8'
             dataKey='count'
-            label={({ name }) => name}
           >
             {data.map((entry, index) => (
               <Cell
@@ -47,7 +42,18 @@ export function MeetingStatusChart({ data }: MeetingStatusChartProps) {
               />
             ))}
           </Pie>
-          <ChartTooltip content={<ChartTooltipContent />} />
+          <ChartTooltip
+            content={({ payload }) => {
+              if (payload && payload.length > 0) {
+                return (
+                  <div className='bg-white p-2 rounded shadow'>
+                    <p className='font-semibold'>{payload[0].payload.status}</p>
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </ChartContainer>
