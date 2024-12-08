@@ -5,6 +5,7 @@ export interface Task {
   title: string;
   start: Date;
   end: Date;
+  free: boolean;
 }
 
 export const getTaskPositionAndHeight = (task: Task, day: Date) => {

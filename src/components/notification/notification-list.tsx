@@ -1,3 +1,5 @@
+"use client";
+
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useFirebaseNotifications } from "@/hooks/use-firebase-notification";
 
 interface Notification {
   id: string;
@@ -51,6 +54,8 @@ const notifications: Notification[] = [
 ];
 
 export function NotificationList() {
+  const { token } = useFirebaseNotifications();
+  console.log(token);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

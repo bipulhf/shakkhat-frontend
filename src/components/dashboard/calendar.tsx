@@ -17,6 +17,7 @@ import {
   getTaskPositionAndHeight,
   isTaskInDay,
 } from "@/lib/calendarUtils";
+import TaskAssignModal from "./task-assign-modal";
 
 const initialTasks: Task[] = [
   {
@@ -24,18 +25,28 @@ const initialTasks: Task[] = [
     title: "Team Meeting",
     start: setMinutes(setHours(new Date(), 10), 0),
     end: setMinutes(setHours(new Date(), 11), 0),
+    free: false,
   },
   {
     id: "2",
     title: "Project Deadline",
     start: setMinutes(setHours(addDays(new Date(), 1), 15), 0),
     end: setMinutes(setHours(addDays(new Date(), 1), 16), 0),
+    free: false,
   },
   {
     id: "3",
     title: "Lunch with Client",
     start: setMinutes(setHours(addDays(new Date(), 2), 12), 30),
     end: setMinutes(setHours(addDays(new Date(), 2), 13), 30),
+    free: false,
+  },
+  {
+    id: "4",
+    title: "Slot 1",
+    start: setMinutes(setHours(addDays(new Date(), 3), 12), 30),
+    end: setMinutes(setHours(addDays(new Date(), 3), 13), 30),
+    free: true,
   },
 ];
 
@@ -62,6 +73,8 @@ const colors = [
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<"day" | "week">("week");
+  const [openModal, setOpenModal] = useState(false);
+  const [taskId, setTaskId] = useState<string | null | number>(null);
 
   const weekDays = eachDayOfInterval({
     start: startOfWeek(currentDate, { weekStartsOn: 0 }),
@@ -91,12 +104,20 @@ const Calendar = () => {
         <div
           key={task.id}
           className={`absolute left-1 right-1 ${
-            colors[Math.floor(Math.random() * colors.length)]
+            task.free
+              ? "bg-gray-500 cursor-pointer"
+              : colors[Math.floor(Math.random() * colors.length)]
           } text-white text-xs p-1 overflow-hidden rounded-sm`}
           style={{
             top: `${top}%`,
             height: `${height}%`,
             minHeight: "20px",
+          }}
+          onClick={() => {
+            if (task.free) {
+              setOpenModal(true);
+              setTaskId(task.id);
+            }
           }}
         >
           <div className='font-semibold'>{task.title}</div>
@@ -197,6 +218,11 @@ const Calendar = () => {
           </div>
         </div>
       </div>
+      <TaskAssignModal
+        open={openModal}
+        setOpen={setOpenModal}
+        taskId={taskId}
+      />
     </div>
   );
 };
