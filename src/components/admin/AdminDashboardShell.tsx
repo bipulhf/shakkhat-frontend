@@ -17,7 +17,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { logout } from "@/actions/auth.action";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import logo from "@/../public/images/logo.png";
 
 export function AdminDashboardShell({
@@ -26,6 +26,7 @@ export function AdminDashboardShell({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   return (
     <div className='flex h-screen'>
       <Sidebar className='basis-[30%]'>
@@ -41,7 +42,7 @@ export function AdminDashboardShell({
         <SidebarContent className='flex flex-col justify-between'>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === "/admin"}>
                 <Link href='/admin'>
                   <BarChart2 className='mr-2 h-4 w-4' />
                   Analytics
@@ -49,7 +50,7 @@ export function AdminDashboardShell({
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === "/admin/logs"}>
                 <Link href='/admin/logs'>
                   <FilesIcon className='mr-2 h-4 w-4' />
                   Logs

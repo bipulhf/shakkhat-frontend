@@ -10,15 +10,27 @@ import {
 } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
-const data = [
-  { host: "Alice", meetings: 25 },
-  { host: "Bob", meetings: 18 },
-  { host: "Charlie", meetings: 30 },
-  { host: "David", meetings: 22 },
-  { host: "Eve", meetings: 15 },
-];
+const transformData = (meetings: Meeting[]) => {
+  const meetingDistribution = meetings.reduce((acc, meeting) => {
+    if (!acc[meeting.host.name]) {
+      acc[meeting.host.name] = 0;
+    }
+    acc[meeting.host.name]++;
+    return acc;
+  }, {} as Record<string, number>);
 
-export function MeetingDistributionChart() {
+  return Object.entries(meetingDistribution).map(([host, meetings]) => ({
+    host,
+    meetings,
+  }));
+};
+
+export function MeetingDistributionChart({
+  meetings,
+}: {
+  meetings: Meeting[];
+}) {
+  const data = transformData(meetings).slice(0, 5);
   return (
     <ChartContainer
       config={{

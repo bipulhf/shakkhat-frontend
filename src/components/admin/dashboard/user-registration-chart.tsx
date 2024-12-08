@@ -10,16 +10,21 @@ import {
 } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
-const data = [
-  { date: "2023-01", users: 400 },
-  { date: "2023-02", users: 600 },
-  { date: "2023-03", users: 800 },
-  { date: "2023-04", users: 1000 },
-  { date: "2023-05", users: 1400 },
-  { date: "2023-06", users: 1800 },
-];
+const transformData = (users: User[]) => {
+  const userCount = users.reduce((acc, user) => {
+    const date = new Date(user.createdAt).toISOString().slice(0, 7);
+    acc[date] = acc[date] ? acc[date] + 1 : 1;
+    return acc;
+  }, {} as Record<string, number>);
 
-export function UserRegistrationChart() {
+  return Object.entries(userCount).map(([date, users]) => ({
+    date,
+    users,
+  }));
+};
+
+export function UserRegistrationChart({ users }: { users: User[] }) {
+  const data = transformData(users);
   return (
     <ChartContainer
       config={{

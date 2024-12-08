@@ -18,7 +18,13 @@ import { SlotUtilizationChart } from "./slot-utilization-chart";
 import { MeetingDistributionChart } from "./meeting-distribution-chart";
 import { UserList } from "../user-list";
 
-export default function AdminDashboard() {
+export default function AdminDashboard({
+  users,
+  meetings,
+}: {
+  users: User[];
+  meetings: Meeting[];
+}) {
   const [isUserListOpen, setIsUserListOpen] = useState(false);
 
   return (
@@ -38,7 +44,7 @@ export default function AdminDashboard() {
                 Here&apos;s a list of all registered users in the system.
               </DialogDescription>
             </DialogHeader>
-            <UserList />
+            <UserList users={users} />
           </DialogContent>
         </Dialog>
       </div>
@@ -48,7 +54,7 @@ export default function AdminDashboard() {
             <CardTitle>User Registrations</CardTitle>
           </CardHeader>
           <CardContent>
-            <UserRegistrationChart />
+            <UserRegistrationChart users={users} />
           </CardContent>
         </Card>
         <Card>
@@ -56,7 +62,7 @@ export default function AdminDashboard() {
             <CardTitle>Meeting Status Distribution</CardTitle>
           </CardHeader>
           <CardContent>
-            <MeetingStatusChart />
+            <MeetingStatusChart meetings={meetings} />
           </CardContent>
         </Card>
         <Card>
@@ -64,7 +70,7 @@ export default function AdminDashboard() {
             <CardTitle>Top Professions</CardTitle>
           </CardHeader>
           <CardContent>
-            <TopProfessionsChart />
+            <TopProfessionsChart users={users} />
           </CardContent>
         </Card>
         <Card>
@@ -80,7 +86,7 @@ export default function AdminDashboard() {
             <CardTitle>Meeting Distribution by Host</CardTitle>
           </CardHeader>
           <CardContent>
-            <MeetingDistributionChart />
+            <MeetingDistributionChart meetings={meetings} />
           </CardContent>
         </Card>
       </div>

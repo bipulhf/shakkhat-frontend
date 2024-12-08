@@ -3,15 +3,32 @@
 import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
-const data = [
-  { name: "Cancelled", value: 10 },
-  { name: "Pending", value: 30 },
-  { name: "Completed", value: 60 },
-];
-
 const COLORS = ["#FF6384", "#36A2EB", "#FFCE56"];
 
-export function MeetingStatusChart() {
+const transformData = (meetings: Meeting[]) => {
+  const meetingStatus = meetings.reduce(
+    (acc, meeting) => {
+      if (meeting.status === 0) {
+        acc.cancelled++;
+      } else if (meeting.status === 1) {
+        acc.pending++;
+      } else {
+        acc.completed++;
+      }
+      return acc;
+    },
+    { cancelled: 0, pending: 0, completed: 0 }
+  );
+
+  return [
+    { name: "Cancelled", value: meetingStatus.cancelled },
+    { name: "Pending", value: meetingStatus.pending },
+    { name: "Completed", value: meetingStatus.completed },
+  ];
+};
+
+export function MeetingStatusChart({ meetings }: { meetings: Meeting[] }) {
+  const data = transformData(meetings);
   return (
     <ChartContainer
       config={{

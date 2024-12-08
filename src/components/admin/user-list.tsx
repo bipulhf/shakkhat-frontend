@@ -11,30 +11,16 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 
-// Mock data for demonstration
-const users = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    profession: "Developer",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    profession: "Designer",
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    profession: "Manager",
-  },
-  // Add more mock users as needed
-];
-
-export function UserList() {
+export function UserList({
+  users,
+}: {
+  users: {
+    id: number;
+    name: string;
+    email: string;
+    profession: string;
+  }[];
+}) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = users.filter(

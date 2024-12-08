@@ -9,68 +9,23 @@ import { Badge } from "@/components/ui/badge";
 
 // Define the structure of a log entry
 interface LogEntry {
-  id: string;
-  operation: "create" | "update" | "delete";
+  id: number;
+  operation: "Login" | "Create" | "Update" | "Delete";
   tableName: string;
-  timestamp: string;
+  createdAt: string;
   details: string;
 }
 
-// Sample data (replace this with your actual data fetching logic)
-const sampleLogs: LogEntry[] = [
-  {
-    id: "1",
-    operation: "create",
-    tableName: "Users",
-    timestamp: "2023-06-01T10:00:00Z",
-    details: "Created user John Doe",
-  },
-  {
-    id: "2",
-    operation: "update",
-    tableName: "Products",
-    timestamp: "2023-06-02T11:30:00Z",
-    details: "Updated product price",
-  },
-  {
-    id: "3",
-    operation: "delete",
-    tableName: "Orders",
-    timestamp: "2023-06-03T09:15:00Z",
-    details: "Deleted order #12345",
-  },
-  {
-    id: "4",
-    operation: "create",
-    tableName: "Users",
-    timestamp: "2023-06-01T10:00:00Z",
-    details: "Created user John Doe",
-  },
-  {
-    id: "5",
-    operation: "update",
-    tableName: "Products",
-    timestamp: "2023-06-02T11:30:00Z",
-    details: "Updated product price",
-  },
-  {
-    id: "6",
-    operation: "delete",
-    tableName: "Orders",
-    timestamp: "2023-06-03T09:15:00Z",
-    details: "Deleted order #12345",
-  },
-];
-
-export default function HistoryLogList() {
-  const [filter, setFilter] = useState<"all" | "create" | "update" | "delete">(
-    "all"
-  );
+export default function HistoryLogList({ logs }: { logs: LogEntry[] }) {
+  console.log(logs);
+  const [filter, setFilter] = useState<
+    "all" | "Login" | "Create" | "Update" | "Delete"
+  >("all");
   const [currentPage, setCurrentPage] = useState(1);
   const logsPerPage = 5;
 
   // Filter logs based on the selected operation type
-  const filteredLogs = sampleLogs.filter(
+  const filteredLogs = logs.filter(
     (log) => filter === "all" || log.operation === filter
   );
 
@@ -95,12 +50,14 @@ export default function HistoryLogList() {
 
   const getOperationColor = (operation: string) => {
     switch (operation) {
-      case "create":
+      case "Create":
         return "bg-green-100 text-green-800";
-      case "update":
+      case "Update":
         return "bg-blue-100 text-blue-800";
-      case "delete":
+      case "Delete":
         return "bg-red-100 text-red-800";
+      case "Login":
+        return "bg-orange-100 text-orange-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -117,20 +74,20 @@ export default function HistoryLogList() {
           All
         </Button>
         <Button
-          variant={filter === "create" ? "default" : "outline"}
-          onClick={() => setFilter("create")}
+          variant={filter === "Create" ? "default" : "outline"}
+          onClick={() => setFilter("Create")}
         >
           Create
         </Button>
         <Button
-          variant={filter === "update" ? "default" : "outline"}
-          onClick={() => setFilter("update")}
+          variant={filter === "Update" ? "default" : "outline"}
+          onClick={() => setFilter("Update")}
         >
           Update
         </Button>
         <Button
-          variant={filter === "delete" ? "default" : "outline"}
-          onClick={() => setFilter("delete")}
+          variant={filter === "Delete" ? "default" : "outline"}
+          onClick={() => setFilter("Delete")}
         >
           Delete
         </Button>
@@ -142,12 +99,16 @@ export default function HistoryLogList() {
               <div className='mr-4'>{getOperationIcon(log.operation)}</div>
               <div className='flex-grow'>
                 <div className='flex justify-between items-center mb-2'>
-                  <Badge className={getOperationColor(log.operation)}>
+                  <Badge
+                    className={`${getOperationColor(
+                      log.operation
+                    )} hover:${getOperationColor(log.operation)}`}
+                  >
                     {log.operation.charAt(0).toUpperCase() +
                       log.operation.slice(1)}
                   </Badge>
                   <span className='text-sm text-gray-500'>
-                    {format(new Date(log.timestamp), "MMM d, yyyy HH:mm")}
+                    {format(new Date(log.createdAt), "MMM d, yyyy HH:mm")}
                   </span>
                 </div>
                 <p className='text-sm font-medium'>{log.tableName}</p>

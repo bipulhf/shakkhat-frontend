@@ -10,15 +10,20 @@ import {
 } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
-const data = [
-  { profession: "Developer", count: 120 },
-  { profession: "Designer", count: 80 },
-  { profession: "Manager", count: 60 },
-  { profession: "Marketer", count: 40 },
-  { profession: "Analyst", count: 30 },
-];
+const transformData = (users: User[]) => {
+  const professionCount = users.reduce((acc, user) => {
+    acc[user.profession] = acc[user.profession] ? acc[user.profession] + 1 : 1;
+    return acc;
+  }, {} as Record<string, number>);
 
-export function TopProfessionsChart() {
+  return Object.entries(professionCount).map(([profession, count]) => ({
+    profession,
+    count,
+  }));
+};
+
+export function TopProfessionsChart({ users }: { users: User[] }) {
+  const data = transformData(users);
   return (
     <ChartContainer
       config={{

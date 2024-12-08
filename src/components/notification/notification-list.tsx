@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFirebaseNotifications } from "@/hooks/use-firebase-notification";
+import { useEffect } from "react";
 
 interface Notification {
   id: string;
@@ -56,6 +57,22 @@ const notifications: Notification[] = [
 export function NotificationList() {
   const { token } = useFirebaseNotifications();
   console.log(token);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js")
+        .then((registration) => {
+          console.log(
+            "Service Worker registered with scope:",
+            registration.scope
+          );
+        })
+        .catch((error) => {
+          console.error("Service Worker registration failed:", error);
+        });
+    }
+  }, []);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

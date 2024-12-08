@@ -24,11 +24,12 @@ import { NotificationList } from "../notification/notification-list";
 import { Button } from "../ui/button";
 import { logout } from "@/actions/auth.action";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import logo from "@/../public/images/logo.png";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   return (
     <div className='flex h-screen'>
       <Sidebar className='basis-[30%]'>
@@ -44,7 +45,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <SidebarContent className='flex flex-col justify-between'>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === "/dashboard"}>
                 <Link href='/dashboard'>
                   <CalendarDays className='mr-2 h-4 w-4' />
                   Schedules
@@ -52,7 +53,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === "/slot"}>
                 <Link href='/slot'>
                   <TimerIcon className='mr-2 h-4 w-4' />
                   Slot
@@ -60,7 +61,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === "/analytics"}>
                 <Link href='/analytics'>
                   <BarChart2 className='mr-2 h-4 w-4' />
                   Analytics
@@ -68,7 +69,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === "/search"}>
                 <Link href='/search'>
                   <Search className='mr-2 h-4 w-4' />
                   Search

@@ -1,7 +1,10 @@
+"use client";
+
 import { AddFreeTimeSlot } from "@/components/slot/add-free-time-slot";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Slot } from "@/components/slot/slot";
+import { AnimatePresence, motion } from "motion/react";
 
 const initialSlots = [
   {
@@ -51,18 +54,32 @@ export default function SlotPage() {
           </Button>
         </AddFreeTimeSlot>
       </div>
-      <div className=''>
-        {initialSlots.map((slot, index) => (
-          <Slot
-            key={slot.id}
-            id={(index + 1) as unknown as string}
-            startTime={slot.startTime}
-            endTime={slot.endTime}
-            startDate={slot.startDate}
-            endDate={slot.endDate}
-          />
-        ))}
-      </div>
+      <motion.div layout>
+        <AnimatePresence>
+          {initialSlots.map((slot) => (
+            <motion.div
+              key={slot.id}
+              layout
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+            >
+              <Slot
+                id={slot.id}
+                startTime={slot.startTime}
+                endTime={slot.endTime}
+                startDate={slot.startDate}
+                endDate={slot.endDate}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }
