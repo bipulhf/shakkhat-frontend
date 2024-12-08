@@ -27,7 +27,13 @@ import toast from "react-hot-toast";
 import { usePathname, useRouter } from "next/navigation";
 import logo from "@/../public/images/logo.png";
 
-export function DashboardShell({ children }: { children: React.ReactNode }) {
+export function DashboardShell({
+  children,
+  notifications,
+}: {
+  children: React.ReactNode;
+  notifications: NotificationType[];
+}) {
   const router = useRouter();
   const pathname = usePathname();
   return (
@@ -105,7 +111,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <div className='container py-4'>
           <div className='flex justify-between w-[1620px]'>
             <SidebarTrigger className='mb-6' />
-            <NotificationList />
+            <NotificationList notifications={notifications} />
           </div>
           {children}
         </div>

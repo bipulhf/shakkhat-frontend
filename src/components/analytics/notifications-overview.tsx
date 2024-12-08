@@ -4,21 +4,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-interface NotificationsOverviewProps {
-  notifications: { title: string; date: string }[];
-}
+import { formatDistanceToNow } from "date-fns";
 
 export function NotificationsOverview({
   notifications,
-}: NotificationsOverviewProps) {
+}: {
+  notifications: NotificationType[];
+}) {
   return (
     <div className='space-y-4'>
       {notifications.map((notification, index) => (
         <Card key={index}>
           <CardHeader>
             <CardTitle className='text-sm'>{notification.title}</CardTitle>
-            <CardDescription>{notification.date}</CardDescription>
+            <CardDescription>
+              <p>{notification.description}</p>
+              <p>{formatDistanceToNow(new Date(notification.createdAt))} ago</p>
+            </CardDescription>
           </CardHeader>
         </Card>
       ))}

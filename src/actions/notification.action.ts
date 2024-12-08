@@ -27,3 +27,26 @@ export async function sendNotificationId(token: string) {
     return { error: e.message };
   }
 }
+
+export async function getNotificationByUserId() {
+  try {
+    const c = await cookies();
+    const response = await fetch(
+      `${API_URL}/auth/nt/${c.get("userId")?.value}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to GET");
+    }
+    const data = await response.json();
+    return data.notifications;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { error: e.message };
+  }
+}

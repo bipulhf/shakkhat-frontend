@@ -1,9 +1,11 @@
 import { getAllMeetings } from "@/actions/meeting.action";
+import { getNotificationByUserId } from "@/actions/notification.action";
 import { getUserId } from "@/actions/users.action";
 import { UserAnalytics } from "@/components/analytics/user-analytics";
 
 export default async function AnalyticsPage() {
   const meetings = (await getAllMeetings()) as Meeting[];
+  const notifications = await getNotificationByUserId();
   const userId = await getUserId();
   const completedMeetings = meetings.filter((meeting) => meeting.status === 2);
   const hostedMeetings = completedMeetings.filter(
@@ -51,6 +53,7 @@ export default async function AnalyticsPage() {
         totalMeetingsHosted={hostedMeetings.length}
         meetingStatusDistribution={meetings_type}
         meetingTrends={meetingTrends}
+        notifications={notifications}
       />
     </div>
   );

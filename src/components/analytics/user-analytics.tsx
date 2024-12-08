@@ -19,6 +19,7 @@ interface UserAnalyticsProps {
   totalMeetingsAttended: number;
   meetingStatusDistribution: { status: string; count: number }[];
   meetingTrends: { date: string; count: number }[];
+  notifications: NotificationType[];
 }
 
 interface AnalyticsData {
@@ -36,6 +37,7 @@ export function UserAnalytics({
   totalMeetingsHosted,
   meetingStatusDistribution,
   meetingTrends,
+  notifications,
 }: UserAnalyticsProps) {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(
     null
@@ -139,9 +141,7 @@ export function UserAnalytics({
             <CardDescription>Some of your recent notifications</CardDescription>
           </CardHeader>
           <CardContent className='pl-2'>
-            <NotificationsOverview
-              notifications={analyticsData.recentNotifications}
-            />
+            <NotificationsOverview notifications={notifications} />
           </CardContent>
         </Card>
       </div>

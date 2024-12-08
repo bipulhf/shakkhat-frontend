@@ -36,3 +36,9 @@ type Slot = {
   user: User;
   userId: number;
 };
+type NotificationType = {
+  id: number;
+  title: string;
+  description: string;
+  createdAt: string;
+};
