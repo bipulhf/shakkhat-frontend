@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart2, LogOut, Users, FilesIcon } from "lucide-react";
+import { BarChart2, LogOut, FilesIcon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -42,8 +42,8 @@ export function AdminDashboardShell({
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href='/admin'>
-                  <Users className='mr-2 h-4 w-4' />
-                  Users
+                  <BarChart2 className='mr-2 h-4 w-4' />
+                  Analytics
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -52,14 +52,6 @@ export function AdminDashboardShell({
                 <Link href='/admin/logs'>
                   <FilesIcon className='mr-2 h-4 w-4' />
                   Logs
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link href='/admin/analytics'>
-                  <BarChart2 className='mr-2 h-4 w-4' />
-                  Analytics
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
