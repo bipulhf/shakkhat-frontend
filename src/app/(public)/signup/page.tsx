@@ -63,7 +63,7 @@ export default function SignUpPage() {
           <CardHeader>
             <CardTitle className='text-2xl font-bold'>
               <Image
-                src={"/images/logo.jpeg"}
+                src={"/images/logo.png"}
                 width={150}
                 height={150}
                 alt='logo'

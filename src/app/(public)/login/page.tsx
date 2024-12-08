@@ -53,7 +53,7 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle className='text-2xl font-bold text-center'>
               <Image
-                src={"/images/logo.jpeg"}
+                src={"/images/logo.png"}
                 width={150}
                 height={150}
                 alt='logo'

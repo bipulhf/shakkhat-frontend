@@ -33,7 +33,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <Sidebar className='basis-[30%]'>
         <SidebarHeader>
           <Image
-            src={"/images/logo.jpeg"}
+            src={"/images/logo.png"}
             alt='logo'
             width={150}
             height={150}
