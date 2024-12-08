@@ -10,6 +10,7 @@ export async function createSlot({
   endTime,
   startDate,
   endDate,
+  recurring,
 }: {
   title: string;
   description: string;
@@ -17,9 +18,54 @@ export async function createSlot({
   endTime: string;
   startDate: string;
   endDate: string;
+  recurring: boolean;
 }) {
   try {
     const c = await cookies();
+    if (recurring) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const dates = [];
+
+      while (start <= end) {
+        dates.push(new Date(start));
+        start.setDate(start.getDate() + 1);
+      }
+
+      const promises = dates.map(async (date) => {
+        const startDateTime = new Date(
+          `${date.toISOString().split("T")[0]}T${startTime}`
+        );
+        const endDateTime = new Date(
+          `${date.toISOString().split("T")[0]}T${endTime}`
+        );
+
+        const response = await fetch(`${API_URL}/slot/create`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            title,
+            description,
+            startTime: startDateTime,
+            endTime: endDateTime,
+            startDate: startDateTime,
+            endDate: endDateTime,
+            userId: parseInt(c.get("userId")!.value),
+            recurring: true,
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message);
+        }
+      });
+
+      await Promise.all(promises);
+      return { message: "Slots created successfully" };
+    }
     const startDateTime = new Date(`${startDate}T${startTime}`);
     const endDateTime = new Date(`${endDate}T${endTime}`);
 
@@ -145,10 +191,10 @@ export async function deleteSlot(id: number) {
   }
 }
 
-export const getSevenDaysSlots = async () => {
+export const getSevenDaysSlots = async (input_date: Date) => {
   try {
     const c = await cookies();
-    const d = new Date();
+    const d = input_date || new Date();
     const date = `${d.getFullYear()}-${d.getMonth() + 1}-${
       d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()
     }`;

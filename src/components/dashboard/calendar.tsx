@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   addDays,
   format,
@@ -18,6 +18,7 @@ import {
 } from "@/lib/calendarUtils";
 import TaskAssignModal from "./task-assign-modal";
 import { transformDate } from "@/lib/date";
+import { getSevenDaysSlots } from "@/actions/slot.action";
 
 const colors = [
   "bg-red-500",
@@ -69,8 +70,11 @@ const transformSlotMeeting = (slotMeeting: SlotMeeting[]) => {
 };
 
 const Calendar = ({ slotMeeting }: { slotMeeting: SlotMeeting[] }) => {
-  const initialTasks = transformSlotMeeting(slotMeeting);
+  const [initialTasks, setInitialTask] = useState(
+    transformSlotMeeting(slotMeeting)
+  );
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [, setLoading] = useState(false);
   const [view, setView] = useState<"day" | "week">("week");
   const [openModal, setOpenModal] = useState(false);
   const [taskId, setTaskId] = useState<string | null | number>(null);
@@ -95,6 +99,25 @@ const Calendar = ({ slotMeeting }: { slotMeeting: SlotMeeting[] }) => {
       }
     });
   };
+
+  useEffect(() => {
+    const fetchSlots = async () => {
+      try {
+        setLoading(true);
+        const sevenDaysSlot = await getSevenDaysSlots(new Date(currentDate));
+        const slotMeeting: SlotMeeting[] = Object.values(
+          sevenDaysSlot
+        ).flat() as SlotMeeting[];
+        const transformedTasks = transformSlotMeeting(slotMeeting);
+        setInitialTask(transformedTasks);
+      } catch (error) {
+        console.error("Error fetching slots:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSlots();
+  }, [currentDate]);
 
   const renderTask = (task: Task, dayDate: Date) => {
     if (isTaskInDay(task, dayDate)) {

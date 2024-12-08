@@ -24,6 +24,7 @@ export function AddFreeTimeSlot({ children }: { children: React.ReactNode }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [recurring, setRecurring] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -37,6 +38,7 @@ export function AddFreeTimeSlot({ children }: { children: React.ReactNode }) {
       endTime,
       startDate,
       endDate,
+      recurring,
     });
 
     if (resp.error) {
@@ -55,6 +57,7 @@ export function AddFreeTimeSlot({ children }: { children: React.ReactNode }) {
     setEndTime("");
     setStartDate("");
     setEndDate("");
+    setRecurring(false);
     router.refresh();
   };
 
@@ -141,6 +144,18 @@ export function AddFreeTimeSlot({ children }: { children: React.ReactNode }) {
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
+          </div>
+          <div className='space-y-2'>
+            <Label htmlFor='recurring' className='flex items-center space-x-2'>
+              <input
+                id='recurring'
+                type='checkbox'
+                checked={recurring}
+                onChange={(e) => setRecurring(e.target.checked)}
+                className='form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out'
+              />
+              <span>Recurring</span>
+            </Label>
           </div>
           <Button type='submit' className='w-full' disabled={!isValid}>
             Add Free Time Slot

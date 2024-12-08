@@ -18,6 +18,13 @@ const transformSlots = (slots: Slot[]) => {
 
 export default function SlotList({ slots }: { slots: Slot[] }) {
   const data = transformSlots(slots);
+  data.sort((a, b) => {
+    if (a.startDate < b.startDate) return -1;
+    if (a.startDate > b.startDate) return 1;
+    if (a.startTime < b.startTime) return -1;
+    if (a.startTime > b.startTime) return 1;
+    return 0;
+  });
   return (
     <motion.div layout>
       <AnimatePresence>
