@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
 
-export function AddSchedule({ children }: { children: React.ReactNode }) {
+export function RequestSchedule({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -76,7 +76,7 @@ export function AddSchedule({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <Button type='submit' className='w-full'>
-            Add meeting schedule
+            Request schedule
           </Button>
         </form>
       </PopoverContent>

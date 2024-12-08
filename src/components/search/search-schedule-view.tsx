@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "../ui/button";
 
 // Mock data for meetings
 const meetings = [
@@ -39,21 +40,29 @@ export function SearchScheduleView() {
             {meetings.map((meeting) => (
               <li
                 key={meeting.id}
-                className='flex items-center justify-between p-4 border rounded-lg shadow-sm my-3'
+                className='p-4 border rounded-lg shadow-sm my-3'
               >
-                <div>
-                  <h3 className='font-semibold'>{meeting.name}</h3>
-                  <p className='text-sm text-gray-500'>{meeting.email}</p>
-                  <p className='my-2 text-blue-700 font-semibold'>
-                    {meeting.description}
-                  </p>
+                <div className='flex items-center justify-between'>
+                  <div>
+                    <h3 className='font-semibold'>{meeting.name}</h3>
+                    <p className='text-sm text-gray-500'>{meeting.email}</p>
+                    <p className='my-2 text-blue-700 font-semibold'>
+                      {meeting.description}
+                    </p>
+                  </div>
+                  <div className='text-right'>
+                    <p className='font-medium'>{meeting.time}</p>
+                    <p className='text-sm text-gray-500'>{meeting.date}</p>
+                  </div>
                 </div>
-                <div className='text-right'>
-                  <p className='font-medium'>{meeting.time}</p>
-                  <p className='text-sm text-gray-500'>{meeting.date}</p>
+                <div>
+                  <Button variant='outline' size='sm' className='font-semibold'>
+                    Schedule a meeting
+                  </Button>
                 </div>
               </li>
             ))}
+            <div className='flex justify-center mt-4'></div>
           </ul>
         ) : (
           <p className='text-center text-gray-500'>No meetings found.</p>
