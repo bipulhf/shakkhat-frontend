@@ -34,6 +34,7 @@ export function RequestSchedule({
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
   const [maxDate, setMaxDate] = useState("2030-12-31");
+  const [minDate, setMinDate] = useState(format(new Date(), "yyyy-MM-dd"));
   const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
   const [isValid, setIsValid] = useState(false);
   const [slotNo, setSlotNo] = useState(0);
@@ -87,7 +88,7 @@ export function RequestSchedule({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className='w-80' align='end'>
+      <PopoverContent className='w-[500px]' align='end'>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='space-y-2'>
             <Label htmlFor='description'>Description</Label>
@@ -143,9 +144,17 @@ export function RequestSchedule({
                       "yyyy-MM-dd"
                     )
                   );
+                  setMinDate(
+                    format(
+                      selectedUser?.slots.find(
+                        (slot) => slot.id === parseInt(value)
+                      )?.startDate || new Date(),
+                      "yyyy-MM-dd"
+                    )
+                  );
                 }}
               >
-                <SelectTrigger className='w-[280px]'>
+                <SelectTrigger className='w-[460px]'>
                   <SelectValue placeholder='Select Slot ...' />
                 </SelectTrigger>
                 <SelectContent>
@@ -154,16 +163,24 @@ export function RequestSchedule({
                       No slots available
                     </SelectItem>
                   ) : (
-                    selectedUser.slots.map((slot) => (
-                      <SelectItem
-                        key={slot.id}
-                        value={slot.id as unknown as string}
-                      >
-                        Slot {slot.id} - {slot.title} (
-                        {format(new Date(slot.startTime), "p")} -{" "}
-                        {format(new Date(slot.endTime), "p")})
-                      </SelectItem>
-                    ))
+                    selectedUser.slots
+                      .sort((a, b) => {
+                        if (a.startDate < b.startDate) return -1;
+                        if (a.startDate > b.startDate) return 1;
+                        if (a.startTime < b.startTime) return -1;
+                        if (a.startTime > b.startTime) return 1;
+                        return 0;
+                      })
+                      .map((slot) => (
+                        <SelectItem
+                          key={slot.id}
+                          value={slot.id as unknown as string}
+                        >
+                          Slot {slot.id} - {slot.title} (
+                          {format(new Date(slot.startTime), "Pp")} -{" "}
+                          {format(new Date(slot.endTime), "Pp")})
+                        </SelectItem>
+                      ))
                   )}
                 </SelectContent>
               </Select>
@@ -176,7 +193,7 @@ export function RequestSchedule({
               type='date'
               name='date'
               required
-              min={format(new Date(), "yyyy-MM-dd")}
+              min={minDate}
               max={maxDate}
               value={date}
               onChange={(e) => setDate(e.target.value)}

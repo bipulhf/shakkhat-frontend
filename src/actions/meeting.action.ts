@@ -87,3 +87,45 @@ export async function getMeetingByHostId() {
     return { error: e.message };
   }
 }
+
+export async function getMeetingBySlotId(slotId: number) {
+  try {
+    const response = await fetch(`${API_URL}/meet/slot/${slotId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch meetings");
+    }
+    const data = await response.json();
+    return data.meetings;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { error: e.message };
+  }
+}
+
+export const approvingMeeting = async (meetingId: number) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/meet/status/${2}/id/${meetingId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PUT",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to approve meeting");
+    }
+    const data = await response.json();
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { error: e.message };
+  }
+};

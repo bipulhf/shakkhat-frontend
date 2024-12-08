@@ -57,3 +57,37 @@ type NotificationType = {
   description: string;
   createdAt: string;
 };
+type AnotherSlotMeeting = {
+  id: number;
+  description: string;
+  date: string | null;
+  start_time: string | null;
+  end_time: string | null;
+  slotId: number;
+  hostId: number;
+  status: number; // e.g., 1 for pending, 2 for approved, etc.
+  createdAt: string;
+  slot: {
+    id: number;
+    title: string;
+    description: string;
+    startTime: string;
+    endTime: string;
+    startDate: string;
+    endDate: string;
+    userId: number;
+    active: boolean;
+    recurring: boolean;
+  };
+  host: {
+    id: number;
+    name: string;
+    email: string;
+    password: string; // hashed password
+    timezone: string;
+    profession: string;
+    notificationId: string | null;
+    role: string; // e.g., "User" or "Admin"
+    createdAt: string;
+  };
+};

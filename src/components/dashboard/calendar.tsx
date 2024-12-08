@@ -134,8 +134,10 @@ const Calendar = ({ slotMeeting }: { slotMeeting: SlotMeeting[] }) => {
             minHeight: "20px",
           }}
           onClick={() => {
-            setOpenModal(true);
-            setTaskId(task.id);
+            if (task.free) {
+              setOpenModal(true);
+              setTaskId(task.id);
+            }
           }}
         >
           <div className='font-semibold'>{task.title}</div>
