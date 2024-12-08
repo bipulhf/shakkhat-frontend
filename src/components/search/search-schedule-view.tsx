@@ -2,6 +2,8 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "../ui/button";
+import { RequestSchedule } from "../dashboard/request-schedule";
+import { Plus } from "lucide-react";
 
 // Mock data for meetings
 const meetings = [
@@ -46,7 +48,7 @@ export function SearchScheduleView() {
                   <div>
                     <h3 className='font-semibold'>{meeting.name}</h3>
                     <p className='text-sm text-gray-500'>{meeting.email}</p>
-                    <p className='my-2 text-blue-700 font-semibold'>
+                    <p className='my-2 text-cyan-700 font-semibold'>
                       {meeting.description}
                     </p>
                   </div>
@@ -56,9 +58,11 @@ export function SearchScheduleView() {
                   </div>
                 </div>
                 <div>
-                  <Button variant='outline' size='sm' className='font-semibold'>
-                    Schedule a meeting
-                  </Button>
+                  <RequestSchedule>
+                    <Button variant={"outline"} size='sm' className='font-bold'>
+                      <Plus className='h-4 w-4' /> Request Schedule
+                    </Button>
+                  </RequestSchedule>
                 </div>
               </li>
             ))}

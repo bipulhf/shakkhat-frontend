@@ -59,7 +59,7 @@ export function NotificationList() {
           <span className='sr-only'>Toggle notifications</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-80'>
+      <DropdownMenuContent className='w-80' align='end'>
         <DropdownMenuLabel>Notifications</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ScrollArea className='h-[300px]'>
