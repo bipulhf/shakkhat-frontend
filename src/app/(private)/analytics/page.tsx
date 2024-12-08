@@ -1,7 +1,9 @@
+import { UserAnalytics } from "@/components/analytics/user-analytics";
+
 export default function AnalyticsPage() {
   return (
     <div>
-      <h1>Analytics</h1>
+      <UserAnalytics userId={1} />
     </div>
   );
 }
