@@ -28,13 +28,14 @@ export const login = async (email: string, password: string) => {
 };
 
 export const register = async (
-  first_name: string,
-  last_name: string,
+  name: string,
   email: string,
+  profession: string,
+  timezone: string,
   password: string
 ) => {
   try {
-    if (!first_name || !last_name || !email || !password) {
+    if (!name || !email || !profession || !timezone || !password) {
       throw new Error("All fields are required");
     }
 
@@ -43,7 +44,7 @@ export const register = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ first_name, last_name, email, password }),
+      body: JSON.stringify({ name, email, password, profession, timezone }),
     });
 
     if (!response.ok) {
