@@ -15,6 +15,10 @@ import { NotificationsOverview } from "./notifications-overview";
 
 interface UserAnalyticsProps {
   userId: number;
+  totalMeetingsHosted: number;
+  totalMeetingsAttended: number;
+  meetingStatusDistribution: { status: string; count: number }[];
+  meetingTrends: { date: string; count: number }[];
 }
 
 interface AnalyticsData {
@@ -26,7 +30,13 @@ interface AnalyticsData {
   meetingTrends: { date: string; count: number }[];
 }
 
-export function UserAnalytics({ userId }: UserAnalyticsProps) {
+export function UserAnalytics({
+  userId,
+  totalMeetingsAttended,
+  totalMeetingsHosted,
+  meetingStatusDistribution,
+  meetingTrends,
+}: UserAnalyticsProps) {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(
     null
   );
@@ -36,13 +46,9 @@ export function UserAnalytics({ userId }: UserAnalyticsProps) {
     const fetchAnalyticsData = async () => {
       // Simulating API call
       const data: AnalyticsData = {
-        totalMeetingsHosted: 45,
-        totalMeetingsAttended: 30,
-        meetingStatusDistribution: [
-          { status: "Completed", count: 35 },
-          { status: "Pending", count: 8 },
-          { status: "Cancelled", count: 2 },
-        ],
+        totalMeetingsHosted,
+        totalMeetingsAttended,
+        meetingStatusDistribution,
         slotUtilization: [
           { status: "Used", count: 45 },
           { status: "Available", count: 15 },
@@ -52,13 +58,7 @@ export function UserAnalytics({ userId }: UserAnalyticsProps) {
           { title: "Meeting cancelled", date: "2023-05-30" },
           { title: "Reminder: Upcoming meeting", date: "2023-05-29" },
         ],
-        meetingTrends: [
-          { date: "2023-05-01", count: 5 },
-          { date: "2023-05-08", count: 8 },
-          { date: "2023-05-15", count: 12 },
-          { date: "2023-05-22", count: 10 },
-          { date: "2023-05-29", count: 15 },
-        ],
+        meetingTrends,
       };
       setAnalyticsData(data);
     };

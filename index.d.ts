@@ -18,6 +18,11 @@ type Meeting = {
   createdAt: string;
   status: number; // 0 for cancelled, 1 for pending, 2 for completed
   host: User;
+  meetingClients: {
+    id: number;
+    guestId: number;
+    meetingId: number;
+  }[];
 };
 type Slot = {
   id: number;

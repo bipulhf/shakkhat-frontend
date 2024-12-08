@@ -1,6 +1,7 @@
 "use server";
 
 import { API_URL } from "@/lib/api";
+import { cookies } from "next/headers";
 
 export async function getAllUsers() {
   try {
@@ -20,3 +21,8 @@ export async function getAllUsers() {
     return { error: e.message };
   }
 }
+
+export const getUserId = async () => {
+  const c = await cookies();
+  return c.get("userId")?.value;
+};
