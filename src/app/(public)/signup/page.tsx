@@ -18,6 +18,7 @@ import { motion } from "motion/react";
 import { register } from "@/actions/auth.action";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -60,7 +61,16 @@ export default function SignUpPage() {
       >
         <Card className='w-[350px]'>
           <CardHeader>
-            <CardTitle className='text-2xl font-bold'>Sign Up</CardTitle>
+            <CardTitle className='text-2xl font-bold'>
+              <Image
+                src={"/images/logo.jpeg"}
+                width={150}
+                height={150}
+                alt='logo'
+                className='mb-5 mx-auto'
+              />
+              Sign Up
+            </CardTitle>
             <CardDescription>
               Create your account to get started
             </CardDescription>
