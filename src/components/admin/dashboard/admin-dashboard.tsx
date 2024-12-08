@@ -78,7 +78,7 @@ export default function AdminDashboard({
             <CardTitle>Slot Utilization</CardTitle>
           </CardHeader>
           <CardContent>
-            <SlotUtilizationChart />
+            <SlotUtilizationChart meetings={meetings} />
           </CardContent>
         </Card>
         <Card>
