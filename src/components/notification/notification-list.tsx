@@ -26,12 +26,13 @@ export function NotificationList({
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
-        .register("/firebase-messaging-sw.js")
-        .then((registration) => {
+        .register("/firebase-messaging-sw.js", { scope: "./" })
+        .then(async (registration) => {
           console.log(
             "Service Worker registered with scope:",
             registration.scope
           );
+          await navigator.serviceWorker.ready;
         })
         .catch((error) => {
           console.error("Service Worker registration failed:", error);

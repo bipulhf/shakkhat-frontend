@@ -4,7 +4,6 @@ import { RequestSchedule } from "@/components/dashboard/request-schedule";
 import Calendar from "@/components/dashboard/calendar";
 import { getAllUsers } from "@/actions/users.action";
 import { getSevenDaysSlots } from "@/actions/slot.action";
-
 export default async function DashboardPage() {
   const users = await getAllUsers();
   const sevenDaysSlot = await getSevenDaysSlots(new Date());

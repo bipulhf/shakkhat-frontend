@@ -1,3 +1,4 @@
+"use client";
 import toast from "react-hot-toast";
 import { X, Bell } from "lucide-react";
 
