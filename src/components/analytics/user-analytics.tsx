@@ -52,8 +52,8 @@ export function UserAnalytics({
         totalMeetingsAttended,
         meetingStatusDistribution,
         slotUtilization: [
-          { status: "Used", count: 45 },
-          { status: "Available", count: 15 },
+          { status: "Used", count: 5 },
+          { status: "Available", count: 9 },
         ],
         recentNotifications: [
           { title: "New meeting request", date: "2023-06-01" },
