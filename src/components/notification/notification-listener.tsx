@@ -9,7 +9,7 @@ const socket = io(process.env.NEXT_PUBLIC_API_URL);
 
 export default function NotificationListener() {
   useEffect(() => {
-    const roomId = "1234";
+    const roomId = 1234;
     socket.emit("join_room", { messid: roomId });
     socket.on("message-recieve", (data) => {
       const { title, body } = JSON.parse(data.message);

@@ -20,6 +20,7 @@ import {
 } from "../ui/select";
 import toast from "react-hot-toast";
 import { createMeeting } from "@/actions/meeting.action";
+import { defaultPromptChat } from "@/actions/llm.action";
 
 export function RequestSchedule({
   children,
@@ -39,6 +40,7 @@ export function RequestSchedule({
   const [isValid, setIsValid] = useState(false);
   const [slotNo, setSlotNo] = useState(0);
   const [date, setDate] = useState("");
+  const [showAI, setShowAI] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -85,6 +87,19 @@ export function RequestSchedule({
     }
   }, [description, selectedUser, slotNo, date]);
 
+  useEffect(() => {
+    if (description.length >= 40) {
+      setShowAI(true);
+    } else {
+      setShowAI(false);
+    }
+  }, [description]);
+
+  const writeWithAI = async (description: string) => {
+    const resp = await defaultPromptChat(description);
+    setDescription(resp.slice(1, -1));
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -100,7 +115,16 @@ export function RequestSchedule({
               autoFocus
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              rows={5}
             />
+            <Button
+              onClick={async () => {
+                await writeWithAI(description);
+              }}
+              className={`${showAI ? "block" : "hidden"} w-full`}
+            >
+              Write with AI
+            </Button>
           </div>
           <div className='space-y-2'>
             <Label htmlFor='filtered-users'>Select User</Label>
