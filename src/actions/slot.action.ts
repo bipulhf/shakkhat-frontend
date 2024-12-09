@@ -213,3 +213,25 @@ export const getSevenDaysSlots = async (input_date: Date) => {
     return { error: e.message };
   }
 };
+
+export const slotPriority = async (id: number) => {
+  try {
+    const response = await fetch(`${API_URL}/ai/body/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message);
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { error: e.message };
+  }
+};

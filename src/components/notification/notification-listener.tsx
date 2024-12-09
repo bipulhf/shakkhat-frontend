@@ -12,7 +12,8 @@ export default function NotificationListener() {
     const roomId = "1234";
     socket.emit("join_room", { messid: roomId });
     socket.on("message-recieve", (data) => {
-      showEnhancedToast(data.title, data.body);
+      const { title, body } = JSON.parse(data.message);
+      showEnhancedToast(title, body);
     });
 
     // Cleanup the listener when the component unmounts
