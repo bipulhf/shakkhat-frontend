@@ -7,21 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { RequestScheduleDialog } from "./request-appointment";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-interface Slot {
-  id: number;
-  title: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
 
 const UserSearchComponent = ({ data }: { data: User[] }) => {
   const [searchTerm, setSearchTerm] = useState("");

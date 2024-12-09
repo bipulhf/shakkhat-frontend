@@ -50,6 +50,7 @@ export default function TaskAssignModal({
 
       try {
         const slotPr = await slotPriority(taskId as number);
+        console.log("Slot Priority", slotPr);
         const response = await getMeetingBySlotId(taskId as number);
         // Ensure response is an array
         setData(Array.isArray(response) ? response : []);

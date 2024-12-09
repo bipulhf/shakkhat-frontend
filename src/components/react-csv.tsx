@@ -6,10 +6,12 @@ import { Download, Loader2 } from "lucide-react";
 import { saveAs } from "file-saver";
 
 interface DownloadButtonProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[] | Record<string, any>;
   filename?: string;
   label?: string;
   variant?: "default" | "outline" | "secondary";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transformer?: (data: any) => any[];
 }
 
@@ -91,6 +93,7 @@ export function DownloadButton({
 // Example transformer functions
 export const transformers = {
   // Example transformer for meeting status distribution
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meetingStatusTransformer: (data: any[]) =>
     data.map((item) => ({
       Status: item.status,
@@ -98,6 +101,7 @@ export const transformers = {
     })),
 
   // Example transformer for meeting trends
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meetingTrendsTransformer: (data: any[]) =>
     data.map((item) => ({
       Date: item.date,
@@ -105,6 +109,7 @@ export const transformers = {
     })),
 
   // Example transformer for notifications
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   notificationsTransformer: (data: any[]) =>
     data.map((item) => ({
       Title: item.title,
