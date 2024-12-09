@@ -216,6 +216,7 @@ export const getSevenDaysSlots = async (input_date: Date) => {
 
 export const slotPriority = async (id: number) => {
   try {
+    console.log(id);
     const response = await fetch(`${API_URL}/ai/body/${id}`, {
       method: "POST",
       headers: {
@@ -229,6 +230,29 @@ export const slotPriority = async (id: number) => {
     }
     const data = await response.json();
     console.log(data);
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { error: e.message };
+  }
+};
+
+export const slotSuggestions = async (text: string) => {
+  try {
+    const c = await cookies();
+    const response = await fetch(`${API_URL}/ai/guest`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text, userId: c.get("userId")!.value }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message);
+    }
+    const data = await response.json();
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

@@ -12,6 +12,7 @@ export default function NotificationListener() {
     const roomId = 1234;
     socket.emit("join_room", { messid: roomId });
     socket.on("message-recieve", (data) => {
+      console.log(data.message);
       const { title, body } = JSON.parse(data.message);
       showEnhancedToast(title, body);
     });

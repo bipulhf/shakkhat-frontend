@@ -50,7 +50,7 @@ function EnhancedToast({ title, body, t }: ToastProps) {
 export function showEnhancedToast(title: string, body: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toast((t: any) => <EnhancedToast title={title} body={body} t={t} />, {
-    duration: 5000,
+    duration: 10000,
     position: "bottom-right",
     // Custom enter/exit animations
     className: "transition-all duration-300 ease-in-out",

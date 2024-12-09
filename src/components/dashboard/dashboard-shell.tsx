@@ -6,6 +6,7 @@ import {
   Search,
   TimerIcon,
   LogOut,
+  Stars,
 } from "lucide-react";
 import {
   Sidebar,
@@ -79,6 +80,14 @@ export function DashboardShell({
                 <Link href='/search'>
                   <Search className='mr-2 h-4 w-4' />
                   Search
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive={pathname === "/slot"}>
+                <Link href='/ai'>
+                  <Stars className='mr-2 h-4 w-4' />
+                  Schedule with AI
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

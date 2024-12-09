@@ -2,6 +2,7 @@ import { getAllMeetings } from "@/actions/meeting.action";
 import { getNotificationByUserId } from "@/actions/notification.action";
 import { getUserId } from "@/actions/users.action";
 import { UserAnalytics } from "@/components/analytics/user-analytics";
+import { DownloadButton, transformers } from "@/components/react-csv";
 
 export default async function AnalyticsPage() {
   const meetings = (await getAllMeetings()) as Meeting[];
@@ -45,8 +46,33 @@ export default async function AnalyticsPage() {
       if (client.guestId === parseInt(userId!)) completedMeetingsCount++;
     })
   );
+
   return (
-    <div>
+    <div className='space-y-6 w-[1600px]'>
+      <div className='flex justify-between space-x-4'>
+        <h1 className='text-4xl font-bold mb-6'>User Analytics</h1>
+        <div className='flex gap-4'>
+          {/* Download buttons for different data types */}
+          <DownloadButton
+            data={meetings_type}
+            filename={`meeting_status_${userId}.csv`}
+            label='Download Meeting Status'
+            transformer={transformers.meetingStatusTransformer}
+          />
+          <DownloadButton
+            data={meetingTrends}
+            filename={`meeting_trends_${userId}.csv`}
+            label='Download Meeting Trends'
+            transformer={transformers.meetingTrendsTransformer}
+          />
+          <DownloadButton
+            data={notifications.slice(0, 3)}
+            filename={`recent_notifications_${userId}.csv`}
+            label='Download Notifications'
+            transformer={transformers.notificationsTransformer}
+          />
+        </div>
+      </div>
       <UserAnalytics
         userId={parseInt(userId!)}
         totalMeetingsAttended={completedMeetingsCount}

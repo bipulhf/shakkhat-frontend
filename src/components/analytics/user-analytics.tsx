@@ -75,7 +75,6 @@ export function UserAnalytics({
 
   return (
     <div className='container mx-auto'>
-      <h1 className='text-4xl font-bold mb-6'>User Analytics</h1>
       <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>

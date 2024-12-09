@@ -54,7 +54,11 @@ const SlotMeetings = ({
                 className='px-4 py-2 bg-green-500 text-white rounded-md'
                 onClick={async () => {
                   toast.loading("Approving meeting...");
-                  const resp = await approvingMeeting(meeting.id);
+                  const resp = await approvingMeeting({
+                    meetingId: meeting.id,
+                    start_time: meeting.slot.startTime,
+                    end_time: meeting.slot.endTime,
+                  });
                   if (resp) {
                     toast.dismiss();
                     toast.success("Meeting approved successfully");

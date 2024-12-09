@@ -97,7 +97,7 @@ export function RequestSchedule({
 
   const writeWithAI = async (description: string) => {
     const resp = await defaultPromptChat(description);
-    setDescription(resp.slice(1, -1));
+    setDescription(resp);
   };
 
   return (
@@ -259,7 +259,7 @@ export function RequestSchedule({
                 ))}
             </div>
           </div>
-          <Button type='submit' className='w-full' disabled={!isValid}>
+          <Button className='w-full' disabled={!isValid}>
             Request schedule
           </Button>
         </form>

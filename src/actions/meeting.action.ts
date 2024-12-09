@@ -107,7 +107,15 @@ export async function getMeetingBySlotId(slotId: number) {
   }
 }
 
-export const approvingMeeting = async (meetingId: number) => {
+export const approvingMeeting = async ({
+  meetingId,
+  start_time,
+  end_time,
+}: {
+  meetingId: number;
+  start_time: string;
+  end_time: string;
+}) => {
   try {
     const response = await fetch(
       `${API_URL}/meet/status/${2}/id/${meetingId}`,
@@ -116,6 +124,10 @@ export const approvingMeeting = async (meetingId: number) => {
           "Content-Type": "application/json",
         },
         method: "PUT",
+        body: JSON.stringify({
+          start_time,
+          end_time,
+        }),
       }
     );
 
