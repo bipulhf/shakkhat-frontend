@@ -43,7 +43,7 @@ export const defaultPromptChat = async (text: string) => {
   const prompt = ChatPromptTemplate.fromMessages([
     [
       "system",
-      "Your task is to help the user to write proper description for the user who wants to set a meeting with someone. You will have the responsibility to guide the user to write a proper description for the meeting. You only write within 50-80 words only. Write in only text format. It will be plain text. It should be a proper description for the meeting. Do not add extra information. Just write a proper description for the meeting. No need to add extra line. Just description.",
+      "Your task is to help the user to write proper description for the user who wants to set a meeting with someone. You will have the responsibility to guide the user to write a proper description for the meeting. You only write within 100 words only. Write in only text format. It will be plain text. It should be a proper description for the meeting. Do not add extra information. Just write a proper description for the meeting. No need to add extra line. Just description.",
     ],
     new MessagesPlaceholder("messages"),
   ]);

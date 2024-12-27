@@ -8,7 +8,7 @@ const ChatApp = () => {
   const [messages, setMessages] = useState<
     { senderId: string; message: string }[]
   >([]);
-  const newSocket = io("http://192.168.161.43:8000");
+  const newSocket = io(process.env.NEXT_PUBLIC_API_URL);
 
   function join_room() {
     console.log("Joining room");

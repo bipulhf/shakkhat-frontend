@@ -84,7 +84,7 @@ export function DashboardShell({
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild isActive={pathname === "/slot"}>
+              <SidebarMenuButton asChild isActive={pathname === "/ai"}>
                 <Link href='/ai'>
                   <Stars className='mr-2 h-4 w-4' />
                   Schedule with AI

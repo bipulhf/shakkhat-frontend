@@ -16,7 +16,7 @@ function EnhancedToast({ title, body, t }: ToastProps) {
         flex items-start p-4 bg-white dark:bg-gray-800 
         rounded-lg shadow-lg border border-gray-200 dark:border-gray-700
         max-w-md w-full space-x-4
-        transition-all duration-300 ease-in-out
+        transition-all duration-300 ease-in-out text-xl
         ${
           t.visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
         }
@@ -30,7 +30,7 @@ function EnhancedToast({ title, body, t }: ToastProps) {
       {/* Content */}
       <div className='flex-grow'>
         <div className='flex justify-between items-center mb-1'>
-          <strong className='text-gray-800 dark:text-gray-200 font-semibold'>
+          <strong className='text-gray-800 dark:text-gray-200 font-semibold text-xl'>
             {title}
           </strong>
           <button
@@ -40,7 +40,7 @@ function EnhancedToast({ title, body, t }: ToastProps) {
             <X size={16} />
           </button>
         </div>
-        <p className='text-gray-600 dark:text-gray-400 text-sm'>{body}</p>
+        <p className='text-gray-600 dark:text-gray-400 text-md'>{body}</p>
       </div>
     </div>
   );

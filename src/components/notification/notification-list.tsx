@@ -53,24 +53,32 @@ export function NotificationList({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ScrollArea className='h-[300px]'>
-          {notifications.map((notification) => (
-            <DropdownMenuItem
-              key={notification.id}
-              className='cursor-pointer hover:bg-gray-100'
-            >
-              <div className='flex flex-col space-y-1 p-2'>
-                <p className='text-sm font-medium leading-none text-primary'>
-                  {notification.title}
-                </p>
-                <p className='text-xs text-muted-foreground'>
-                  {notification.description}
-                </p>
-                <p className='text-xs text-muted-foreground'>
-                  {formatDistanceToNow(new Date(notification.createdAt))} ago
-                </p>
-              </div>
-            </DropdownMenuItem>
-          ))}
+          {!notifications || notifications.length == 0 ? (
+            <div>
+              <p className='text-center text-muted-foreground'>
+                No notifications
+              </p>
+            </div>
+          ) : (
+            notifications.map((notification) => (
+              <DropdownMenuItem
+                key={notification.id}
+                className='cursor-pointer hover:bg-gray-100'
+              >
+                <div className='flex flex-col space-y-1 p-2'>
+                  <p className='text-sm font-medium leading-none text-primary'>
+                    {notification.title}
+                  </p>
+                  <p className='text-xs text-muted-foreground'>
+                    {notification.description}
+                  </p>
+                  <p className='text-xs text-muted-foreground'>
+                    {formatDistanceToNow(new Date(notification.createdAt))} ago
+                  </p>
+                </div>
+              </DropdownMenuItem>
+            ))
+          )}
         </ScrollArea>
       </DropdownMenuContent>
     </DropdownMenu>

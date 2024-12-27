@@ -41,6 +41,8 @@ export async function getNotificationByUserId() {
     );
 
     if (!response.ok) {
+      const data = await response.json();
+      console.log(data);
       throw new Error("Failed to GET");
     }
     const data = await response.json();
