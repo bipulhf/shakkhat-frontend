@@ -2,6 +2,8 @@
 
 Welcome to the frontend of **Shakkhat - Meeting Scheduler**, a sleek and efficient platform designed to streamline meeting scheduling and management. This frontend is built with **Next.js**, **React**, **Tailwind CSS**, and **ShadCN** to ensure a modern and seamless user experience.
 
+Backend Repo Link : https://github.com/Unayes09/LU-Hackathon
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Features](#features)
